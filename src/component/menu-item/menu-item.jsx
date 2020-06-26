@@ -3,7 +3,7 @@ import './menu-item.scss';
 import {withRouter} from "react-router-dom";
 
  function Menuitem(props) {
-     console.log(props)
+     
     return (
         <div  
         className={`${props.size} menu-item`} onClick={()=>props.history.push(`${props.match.url}${props.url}`)} >

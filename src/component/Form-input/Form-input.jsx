@@ -2,7 +2,7 @@ import React from 'react';
 import './Form-input.scss';
 
 export default function Forminput({handelChange,label, ...otherProps}) {
-    console.log(otherProps)
+ 
     return (
         <div className="group">
         <input className='form-input' 

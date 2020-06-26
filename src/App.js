@@ -5,7 +5,7 @@ import './App.css';
 import Homepage from './pages/Homepage/Homepage';
 import Header from './component/Header/header';
 import Signinandsignup from './pages/sign-i-and-sign-up/sign-i-and-sign-up'
-import {auth} from './firebase/firebase';
+import {auth ,creatProfilDoc } from './firebase/firebase';
 
  
   
@@ -21,11 +21,28 @@ class App extends React.Component {
 
 unsubscribeFromAuth= null;
 componentDidMount() {
-  this.subscribeusers = auth.onAuthStateChanged(user =>{
-    this.setState({curentUser: user});
+  this.unsubscribeFromAuth = auth.onAuthStateChanged(async user =>{
+   
+   if (user) {
+     const  userRef = await creatProfilDoc(user);
+   
+     userRef.onSnapshot(userSnopshot =>{
+      this.setState({
+        curentUser:{ id: userSnopshot.id,
+        ...userSnopshot.data()}
+      })
+      console.log('state',this.state);
+     })
+       }
+       else {
+         this.setState({curentUser:user})
+      }
+       
+       
+       })
+ 
     
-    
-  })
+ 
 
 }
 componentWillUnmount(){

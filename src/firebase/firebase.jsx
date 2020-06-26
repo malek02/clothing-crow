@@ -14,6 +14,38 @@ const config =
         measurementId: "G-RWYEHDS90C"
       };
 
+export const creatProfilDoc = async (userAuth , adiitionaldata)=>{
+if (!userAuth) return;
+const userref = firestore.doc(`users/${userAuth.uid}`) //make ur object  DOC Refrence
+
+const snopshot= await userref.get() // bring it as a Doc snapshot
+
+if(!snopshot.exists) {
+  const {uid,displayName, email}= userAuth;
+  
+  const timeCreat= new Date();
+  try {
+    await userref.set({
+      displayName,
+      email,
+      uid,
+     
+      timeCreat,
+      ...adiitionaldata
+    })
+  } catch (error){
+    console.log('error creating user', error.message);
+  }
+}
+
+return userref;
+}
+
+
+
+
+
+
       firebase.initializeApp(config);
 
 export const auth= firebase.auth();

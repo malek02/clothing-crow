@@ -3,9 +3,10 @@ import './header.scss';
 import { Link } from 'react-router-dom';
 import { ReactComponent as Logo } from '../../assest/crown.svg.svg';
 import { auth } from '../../firebase/firebase';
+import {withRouter} from "react-router-dom";
 
-export default function Header({currentUser}) {
-    console.log(1,currentUser)
+ function Header({currentUser, history,match, ...otherProps}) {
+   
     return (
         <div className='header'>
             <Link classeName='logo-container' to={'/'}>
@@ -16,12 +17,12 @@ export default function Header({currentUser}) {
 <Link className='option' to='/shop'>
     SHOP
 </Link>
-<Link className='option' to='/shop'>
+<div className='option' onClick={()=>history.push(`${match.url}Signin`)}>
     CONTACT
-</Link>
+</div>
 {
     currentUser ?
-    <div className='option' onClick={e=>auth.signOut()}>Sign Out</div>
+    <div className='option' onClick={()=>auth.signOut()}>Sign Out</div>
     :
     <Link className='option' to='/Signin'>Sign In</Link>
 }
@@ -30,3 +31,6 @@ export default function Header({currentUser}) {
         </div>
     )
 }
+
+
+export default withRouter(Header);
