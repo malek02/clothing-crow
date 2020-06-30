@@ -3,10 +3,12 @@ import './header.scss';
 import { Link } from 'react-router-dom';
 import { ReactComponent as Logo } from '../../assest/crown.svg.svg';
 import { auth } from '../../firebase/firebase';
-import {withRouter} from "react-router-dom";
 
- function Header({currentUser, history,match, ...otherProps}) {
-   
+import { connect } from 'react-redux';
+
+
+function Header( {hello }  ) {
+
     return (
         <div className='header'>
             <Link classeName='logo-container' to={'/'}>
@@ -14,23 +16,27 @@ import {withRouter} from "react-router-dom";
 
             </Link>
             <div className='options'>
-<Link className='option' to='/shop'>
-    SHOP
+                <Link className='option' to='/shop'>
+                    SHOP
 </Link>
-<div className='option' onClick={()=>history.push(`${match.url}Signin`)}>
-    CONTACT
+                <div className='option' >
+                    CONTACT
 </div>
-{
-    currentUser ?
-    <div className='option' onClick={()=>auth.signOut()}>Sign Out</div>
-    :
-    <Link className='option' to='/Signin'>Sign In</Link>
-}
+                { [hello] ?
+                        (<div className='option' onClick={() => auth.signOut()}>Sign Out</div>)
+                        
+                        : (
+                            <Link className='option' to='/Signin'>Sign In</Link>)
+                }
+                {console.log('1',hello)}
             </div>
 
         </div>
     )
 }
+const gettheState = (state) => ({
+   hello: state.user.curentUser
+    
+});
 
-
-export default withRouter(Header);
+export default connect(gettheState)(Header);
