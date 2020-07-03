@@ -33,6 +33,7 @@ function Header({ currentUser, hidden }) {
                 }
               
                 {console.log('1', currentUser)}
+                
                 <Carticon />
             </div>
            { hidden ? null
