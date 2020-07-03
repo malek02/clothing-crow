@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, Redirect } from 'react-router-dom';
 import shop from "./pages/Shop/shop";
 import './App.css';
 import Homepage from './pages/Homepage/Homepage';
@@ -22,10 +22,10 @@ class App extends React.Component {
 
         userRef.onSnapshot(userSnopshot => {
           this.props.setCurrentUser({
-         
-              id: userSnopshot.id,
-              ...userSnopshot.data()
-           
+
+            id: userSnopshot.id,
+            ...userSnopshot.data()
+
           })
 
         })
@@ -33,21 +33,12 @@ class App extends React.Component {
       else {
         this.props.setCurrentUser({ user })
       }
-
-
     })
-
-
-
-
   }
   componentWillUnmount() {
     this.unsubscribeFromAuth();
 
   }
-
-
-
   render() {
 
     return (
@@ -56,15 +47,20 @@ class App extends React.Component {
         <Switch>
           <Route exact path='/' component={Homepage} />
           <Route exact path='/shop' component={shop} />
-          <Route exact path='/Signin' component={Signinandsignup} />
-
-
+          <Route exact path='/Signin' component={Signinandsignup} /> 
+          (render={() => this.props.currentUser ? (
+        <Redirect to='/' />) : (<Signinandsignup />)})
+          
         </Switch>
       </>
     );
   }
 }
-const dispatchToProps = dispatch => ({
+const gettheState = ({ user }) => ({
+ currentUser: user.curentUser
+
+});
+const mapdispatchToProps = dispatch => ({
   setCurrentUser: user => dispatch(setCurrentUser(user))
 })
-export default connect(null, dispatchToProps)(App);
+export default connect(gettheState, mapdispatchToProps)(App);

@@ -4,7 +4,7 @@
     height: 50px;
     letter-spacing: 0.3px;
     line-height: 50px;
-    padding: 60px35px 35px 35px;
+    padding: 1px 1px 1px 1px;
     font-size: 12px;
     background-color: black;
     color: white;
@@ -13,7 +13,17 @@
     font-weight: bolder;
     border: none;
     cursor: pointer;
+   
+   display: flex;
+   align-items: center;
+   justify-content: center;
+    
+  
     margin: 1px;
+   
+
+    
+   
 
     
 
@@ -24,9 +34,27 @@
       color: black;
       border: 1px solid black;
     }
+    &.invented{
+      
+      background-color: white;
+      color: black;
+      
+     
+
+
+
+     &:hover{
+      background-color: black;
+      color: white;
+      border: 1px solid black;
+      
+
+     }
+    }
     &.google-sign-in{ 
       background-color: rgb(255, 30, 0);
       color:white;
+      
 
       &:hover{
         background-color: white;
@@ -44,5 +72,6 @@
       color: black;
     }
   }
+  
   }
   
